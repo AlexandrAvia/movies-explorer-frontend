@@ -1,11 +1,12 @@
 .header {
-    margin: 18px 70px;
+    padding: 18px 70px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .header__logo-link{
+    cursor: pointer;
 }
 
 .header__logo-image{
