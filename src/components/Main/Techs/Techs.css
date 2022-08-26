@@ -1,0 +1,14 @@
+.techs {
+padding: 100px 70px;
+background-color: #272727;
+}
+
+.section__title {
+margin: 0;
+font-weight: 400;
+font-size: 22px;
+line-height: 27px;
+letter-spacing: -0.04em;
+padding-bottom: 23px;
+border-bottom: 1px #DADADA solid;
+}
