@@ -1,0 +1,29 @@
+.aboutme  {
+    margin: 100px 70px 125px;
+}
+
+.aboutme__profile {
+    max-width: 600px;
+    width: 100%;
+}
+
+.aboutme__profile-name {
+font-size: 50px;
+line-height: 58px;
+letter-spacing: -0.04em;
+font-weight: 400;
+margin: 66px 0 18px;
+}
+
+.aboutme__profile-proff {
+font-weight: 500;
+font-size: 18px;
+line-height: 20px;
+margin: 0 0 26px;
+}
+
+.aboutme__profile-about {
+font-size: 14px;
+line-height: 22px;
+margin: 0;
+}
