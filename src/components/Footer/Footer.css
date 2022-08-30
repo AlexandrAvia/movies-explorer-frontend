@@ -41,3 +41,37 @@
   opacity: 0.7;
   cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+  .footer {
+    margin: 79px 30px 20px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .footer {
+    margin: 79px 10px 10px;
+  }
+
+  .footer__container {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .footer__title {
+    margin: 0 0 30px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .footer__links {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .footer__year {
+    color: #8b8b8b;
+  }
+}

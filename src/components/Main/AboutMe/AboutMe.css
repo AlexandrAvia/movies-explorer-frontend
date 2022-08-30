@@ -6,6 +6,7 @@
   display: flex;
   margin-top: 66px;
   justify-content: space-between;
+  gap: 49px;
 }
 
 .aboutme__profile {
@@ -47,6 +48,9 @@
   text-decoration: none;
   color: #ffffff;
   transition: opacity 0.2s ease;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
 }
 
 .aboutme__profile__link:hover {
@@ -59,4 +63,69 @@
   width: 270px;
   height: 327px;
   object-fit: cover;
+}
+
+@media screen and (max-width: 768px) {
+  .aboutme {
+    margin: 90px 50px;
+  }
+
+  .aboutme__profile__photo {
+    width: 255px;
+    height: 307px;
+  }
+
+  .aboutme__profile-name {
+    font-size: 40px;
+    line-height: 40px;
+    margin: 0 0 16px;
+  }
+
+  .aboutme__profile-proff {
+    font-size: 12px;
+    line-height: 18px;
+    margin-bottom: 20px;
+  }
+
+  .aboutme__profile__links {
+    margin-top: 87px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .aboutme {
+    margin: 70px 14px;
+  }
+
+  .aboutme__column {
+    flex-direction: column-reverse;
+    margin-top: 60px;
+    gap: 40px;
+  }
+  .aboutme__profile__photo {
+    width: 292px;
+    height: 352px;
+  }
+
+  .aboutme__profile-name {
+    font-size: 30px;
+    line-height: 36px;
+    margin: 0 0 20px;
+  }
+
+  .aboutme__profile-proff {
+    font-size: 11px;
+    line-height: 16px;
+    margin-bottom: 20px;
+  }
+
+  .aboutme__profile__link {
+    font-size: 14px;
+    line-height: 17px;
+    gap: 25px;
+  }
+
+  .aboutme__profile__links {
+    margin-top: 40px;
+  }
 }

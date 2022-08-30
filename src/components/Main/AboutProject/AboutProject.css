@@ -33,6 +33,10 @@
   margin: 0;
 }
 
+.aboutproject__description-container:first-child {
+  margin-right: 40px;
+}
+
 .aboutproject__timeline {
   display: flex;
   min-height: 36px;
@@ -85,4 +89,107 @@
   max-width: 912px;
   width: 100%;
   margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .aboutproject {
+    padding: 90px 50px;
+  }
+
+  .aboutproject__description {
+    padding: 70px 0 93px;
+  }
+
+  .aboutproject__description-text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .aboutproject__description-container:first-child {
+    margin-right: 30px;
+  }
+
+  .aboutproject__timeline-one {
+    max-width: 140px;
+    width: 100%;
+  }
+
+  .aboutproject__timeline-four {
+    max-width: 528px;
+    width: 100%;
+  }
+
+  .aboutproject__timeline-description-back {
+    max-width: 140px;
+    width: 100%;
+  }
+
+  .aboutproject__timeline-description-front {
+    max-width: 528px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .aboutproject {
+    padding: 70px 18px;
+  }
+
+  .aboutproject__description {
+    display: flex;
+    padding: 60px 0 70px;
+    flex-direction: column;
+    gap: 56px;
+  }
+
+  .aboutproject__description-text {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .section__title {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 28px;
+  }
+
+  .aboutproject__description-title {
+    padding-bottom: 16px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .aboutproject__timeline-description {
+    font-size: 11px;
+    line-height: 13px;
+    padding-top: 10px;
+  }
+
+  .aboutproject__timeline-one {
+    font-size: 11px;
+    line-height: 13px;
+    max-width: 100px;
+    width: 100%;
+  }
+
+  .aboutproject__timeline-four {
+    font-size: 11px;
+    line-height: 13px;
+    max-width: 528px;
+    width: 100%;
+  }
+
+  .aboutproject__timeline-description-back {
+    max-width: 100px;
+    width: 100%;
+  }
+
+  .aboutproject__timeline-description-front {
+    max-width: 184px;
+    width: 100%;
+  }
+
+  .aboutproject__timeline {
+    min-height: 35px;
+  }
 }
