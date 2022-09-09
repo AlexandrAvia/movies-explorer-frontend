@@ -1,0 +1,136 @@
+.register {
+  margin: 70px auto;
+  max-width: 396px;
+  width: 100%;
+}
+
+.form__title {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  margin: 40px 0;
+}
+
+.form__label {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #8b8b8b;
+  margin-bottom: 10px;
+}
+
+.form__fieldset {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+.form__input {
+  box-sizing: border-box;
+  border: none;
+  padding: 0 0 0 7px;
+  max-width: 396px;
+  width: 100%;
+  height: 46px;
+  background: #2f2f2f;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  color: #ffffff;
+  margin: 10px 0 20px;
+}
+
+.form__input:last-of-type {
+  color: #ee3465;
+  margin-bottom: 10px;
+}
+
+.form__error {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #ee3465;
+}
+
+.fieldset__button {
+  border: none;
+  margin: 69px 0 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form__save-button {
+  border: none;
+  max-width: 396px;
+  width: 100%;
+  height: 45px;
+  background: #4285f4;
+  border-radius: 3px;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  margin: 0;
+  padding: 0;
+}
+
+.form__save-button:hover,
+.form__link:hover {
+  opacity: 0.7;
+}
+
+.form__paragraph {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #8b8b8b;
+  margin: 0;
+}
+
+.form__link {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4285f4;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 400px) {
+  .register {
+    margin: 50px auto;
+    max-width: 260px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form__title {
+    margin: 50px 0 80px;
+  }
+
+  .fieldset__button {
+    margin: 157px 0 0;
+    gap: 14px;
+  }
+
+  .form__save-button {
+    width: 260px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .form__paragraph {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .form__link {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
