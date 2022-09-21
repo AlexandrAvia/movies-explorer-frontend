@@ -1,8 +1,22 @@
+import React from "react";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
+import { useFormWithValidation } from "../../utils/validation";
 
-function Login() {
+function Login({ handleLogin }) {
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
+  const [disabled, setDisabled] = React.useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    handleLogin({
+      email: values.email,
+      password: values.password,
+    });
+    setDisabled(true);
+    return !isValid;
+  }
   return (
     <section className="register">
       <Link to="/" className="header__logo-link">
@@ -19,7 +33,10 @@ function Login() {
             aria-label="Электронная почта"
             placeholder="pochta@yandex.ru"
             required
+            onChange={handleChange}
+            value={values.email || ""}
           />
+          <span className="form__error">{errors.email}</span>
           <label className="form__label">Пароль</label>
           <input
             className="form__input"
@@ -30,17 +47,25 @@ function Login() {
             minLength="4"
             maxLength="15"
             required
+            onChange={handleChange}
+            value={values.password || ""}
           />
-          {/* <span className="form__error">Что-то пошло не так...</span> */}
+          <span className="form__error">{errors.password}</span>
         </fieldset>
       </form>
       <fieldset className="fieldset__button">
-        <button type="button" className="form__save-button">
+        <button
+          type="submit"
+          disabled={!isValid}
+          className={`form__save-button ${
+            !isValid && "form__save-button_disabled"
+          }`}
+        >
           Войти
         </button>
         <p className="form__paragraph">
           Ещё не зарегистрированы?&ensp;
-          <Link to="/signin" className="form__link">
+          <Link to="/signup" className="form__link">
             Регистрация
           </Link>
         </p>

@@ -11,14 +11,14 @@ import NotFound from "../NotFound/NotFound";
 import moviesApi from "../../utils/MoviesApi";
 
 function App() {
-  const [movies, setMovies] = useState([]);
+  /* const [movies, setMovies] = useState([]);
   useEffect(() => {
     moviesApi.getMovies().then((res) => {
       console.log(res);
       setMovies(res);
       localStorage.setItem("movies", JSON.stringify(res));
     });
-  }, []);
+  }, []); */
   return (
     <div className="app">
       <Routes>

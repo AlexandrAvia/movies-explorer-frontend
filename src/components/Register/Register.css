@@ -42,7 +42,6 @@
 }
 
 .form__input:last-of-type {
-  color: #ee3465;
   margin-bottom: 10px;
 }
 
@@ -76,11 +75,22 @@
   line-height: 17px;
   margin: 0;
   padding: 0;
+  cursor: pointer;
 }
 
 .form__save-button:hover,
 .form__link:hover {
   opacity: 0.7;
+}
+
+.form__save-button_disabled:hover {
+  opacity: 1;
+}
+
+.form__save-button_disabled {
+  background: #f8f8f8;
+  color: #c2c2c2;
+  cursor: default;
 }
 
 .form__paragraph {
