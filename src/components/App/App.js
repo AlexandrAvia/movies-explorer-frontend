@@ -9,6 +9,7 @@ import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
 import NotFound from "../NotFound/NotFound";
 import moviesApi from "../../utils/MoviesApi";
+import { mainApi } from "../../utils/MainApi";
 
 function App() {
   /* const [movies, setMovies] = useState([]);
