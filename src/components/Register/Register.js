@@ -18,7 +18,6 @@ function Register({ handleRegister }) {
     setDisabled(true);
     return !isValid;
   }
-  console.log("valid ", isValid);
   return (
     <section className="register">
       <Link to="/" className="header__logo-link">
@@ -67,24 +66,24 @@ function Register({ handleRegister }) {
           />
           <span className="form__error">{errors.password}</span>
         </fieldset>
+        <fieldset className="fieldset__button">
+          <button
+            type="submit"
+            disabled={!isValid}
+            className={`form__save-button ${
+              !isValid && "form__save-button_disabled"
+            }`}
+          >
+            Зарегистрироваться
+          </button>
+          <p className="form__paragraph">
+            Уже зарегистрированы?&ensp;
+            <Link to="/signin" className="form__link">
+              Войти
+            </Link>
+          </p>
+        </fieldset>
       </form>
-      <fieldset className="fieldset__button">
-        <button
-          type="submit"
-          disabled={!isValid}
-          className={`form__save-button ${
-            !isValid && "form__save-button_disabled"
-          }`}
-        >
-          Зарегистрироваться
-        </button>
-        <p className="form__paragraph">
-          Уже зарегистрированы?&ensp;
-          <Link to="/signin" className="form__link">
-            Войти
-          </Link>
-        </p>
-      </fieldset>
     </section>
   );
 }

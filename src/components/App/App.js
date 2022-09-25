@@ -20,13 +20,28 @@ function App() {
       localStorage.setItem("movies", JSON.stringify(res));
     });
   }, []); */
+
+  const handleRegister = ({ name, email, password }) => {
+    return mainApi
+      .register(name, email, password)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="app">
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/movies" element={<Movies />} />
         <Route path="/saved-movies" element={<SavedMovies />} />
-        <Route path="/signup" element={<Register />} />
+        <Route
+          path="/signup"
+          element={<Register handleRegister={handleRegister} />}
+        />
         <Route path="/signin" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<NotFound />} />
