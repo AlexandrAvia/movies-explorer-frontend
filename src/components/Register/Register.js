@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import { useFormWithValidation } from "../../utils/validation";
 
-function Register({ handleRegister }) {
+function Register({ handleRegister, responseMessage }) {
   const { values, handleChange, errors, isValid } = useFormWithValidation();
   const [disabled, setDisabled] = React.useState(false);
 
@@ -67,6 +67,7 @@ function Register({ handleRegister }) {
           <span className="form__error">{errors.password}</span>
         </fieldset>
         <fieldset className="fieldset__button">
+          <p className="form__error">{responseMessage}</p>
           <button
             type="submit"
             disabled={!isValid}

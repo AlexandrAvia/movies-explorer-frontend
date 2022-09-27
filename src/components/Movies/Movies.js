@@ -4,12 +4,12 @@ import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 
-function Movies() {
+function Movies({ movies }) {
   return (
     <>
       <Header isLogedin={true} />
       <SearchForm />
-      <MoviesCardList />
+      <MoviesCardList movies={movies} />
       <Footer />
     </>
   );

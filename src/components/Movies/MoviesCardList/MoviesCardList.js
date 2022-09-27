@@ -1,15 +1,13 @@
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList() {
+function MoviesCardList({ movies }) {
   return (
     <section className="card__list">
       <div className="card__container">
-        <MoviesCard />
-        <MoviesCard IsMoviesSaved={true} />
-        <MoviesCard />
-        <MoviesCard />
-        <MoviesCard />
+        {movies.map((movie) => (
+          <MoviesCard key={movie.id} movie={movie} />
+        ))}
       </div>
       <button type="button" className="card__more">
         Ещё

@@ -1,17 +1,19 @@
 import "./MoviesCard.css";
 import image from "../../../images/film.svg";
 
-function MoviesCard({ IsMoviesSaved }) {
+function MoviesCard({ movie }) {
   return (
     <div className="card">
-      <img className="card__image" src={image} alt="Обложка фильма" />
+      <img
+        className="card__image"
+        src={`https://api.nomoreparties.co${movie.image.url}`}
+        alt={movie.nameRU}
+      />
       <div className="card__description">
-        <p className="card__description_title">
-          Пи Джей Харви: A dog called money
-        </p>
-        <p className="card__description_duration">1ч 17м</p>
+        <p className="card__description_title">{movie.nameRU}</p>
+        <p className="card__description_duration">{movie.duration}</p>
       </div>
-      {IsMoviesSaved ? (
+      {true ? (
         <button className="card__button-saved" />
       ) : (
         <button className="card__button-save">Сохранить</button>
