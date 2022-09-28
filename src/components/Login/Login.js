@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import { useFormWithValidation } from "../../hooks/validation";
 
-function Login({ handleLogin }) {
+function Login({ handleLogin, responseMessage }) {
   const { values, handleChange, errors, isValid } = useFormWithValidation();
   const [disabled, setDisabled] = React.useState(false);
 
@@ -23,7 +23,7 @@ function Login({ handleLogin }) {
         <img className="header__logo-image" src={logo} alt="логотип" />
       </Link>
       <h2 className="form__title">Рады видеть!</h2>
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
         <fieldset className="form__fieldset">
           <label className="form__label">E-mail</label>
           <input
@@ -52,24 +52,25 @@ function Login({ handleLogin }) {
           />
           <span className="form__error">{errors.password}</span>
         </fieldset>
+        <fieldset className="fieldset__button">
+          <p className="form__error">{responseMessage}</p>
+          <button
+            type="submit"
+            disabled={!isValid}
+            className={`form__save-button ${
+              !isValid && "form__save-button_disabled"
+            }`}
+          >
+            Войти
+          </button>
+          <p className="form__paragraph">
+            Ещё не зарегистрированы?&ensp;
+            <Link to="/signup" className="form__link">
+              Регистрация
+            </Link>
+          </p>
+        </fieldset>
       </form>
-      <fieldset className="fieldset__button">
-        <button
-          type="submit"
-          disabled={!isValid}
-          className={`form__save-button ${
-            !isValid && "form__save-button_disabled"
-          }`}
-        >
-          Войти
-        </button>
-        <p className="form__paragraph">
-          Ещё не зарегистрированы?&ensp;
-          <Link to="/signup" className="form__link">
-            Регистрация
-          </Link>
-        </p>
-      </fieldset>
     </section>
   );
 }
