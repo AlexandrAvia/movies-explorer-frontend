@@ -1,4 +1,11 @@
-import { Route, Router, Routes, useNavigate, Navigate } from "react-router-dom";
+import {
+  Route,
+  Router,
+  Routes,
+  useNavigate,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./App.css";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -15,11 +22,35 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [movies, setMovies] = useState([]);
   const [responseMessage, setresponseMessage] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
+
+  const tokenCheck = () => {
+    let jwt = localStorage.getItem("token");
+    if (jwt) {
+      mainApi
+        .checkToken(jwt)
+        .then((res) => {
+          if (res) {
+            let userData = {
+              id: res._id,
+              email: res.email,
+              name: res.name,
+            };
+            navigate(location.pathname);
+            setLoggedIn(true);
+            setCurrentUser(userData);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   useEffect(() => {
     tokenCheck();
@@ -56,28 +87,6 @@ function App() {
       .catch((err) => {
         setresponseMessage(err);
       });
-  };
-
-  const tokenCheck = () => {
-    let jwt = localStorage.getItem("token");
-    if (jwt) {
-      mainApi
-        .checkToken(jwt)
-        .then((res) => {
-          if (res) {
-            let userData = {
-              id: res._id,
-              email: res.email,
-              name: res.name,
-            };
-            setLoggedIn(true);
-            setCurrentUser(userData);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
   };
 
   const updateUserInfo = ({ name, email }) => {
