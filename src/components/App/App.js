@@ -29,6 +29,10 @@ function App() {
   const [responseMessage, setresponseMessage] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
 
+  useEffect(() => {
+    tokenCheck();
+  }, []);
+
   const tokenCheck = () => {
     let jwt = localStorage.getItem("token");
     if (jwt) {
@@ -52,9 +56,6 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    tokenCheck();
-  }, []);
   /* useEffect(() => {
     moviesApi.getMovies().then((res) => {
       setMovies(res);
