@@ -101,8 +101,22 @@ function App() {
       <div className="app">
         <Routes>
           <Route path="/" element={<Main isLogedin={loggedIn} />} />
-          <Route path="/movies" element={<Movies movies={movies} />} />
-          <Route path="/saved-movies" element={<SavedMovies />} />
+          <Route
+            path="/movies"
+            element={
+              <ProtectedRoute loggedIn={loggedIn}>
+                <Movies movies={movies} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/saved-movies"
+            element={
+              <ProtectedRoute loggedIn={loggedIn}>
+                <SavedMovies />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/signup"
             element={
@@ -132,7 +146,9 @@ function App() {
           <Route
             path="/profile"
             element={
-              <Profile updateUserInfo={updateUserInfo} signOut={signOut} />
+              <ProtectedRoute loggedIn={loggedIn}>
+                <Profile updateUserInfo={updateUserInfo} signOut={signOut} />
+              </ProtectedRoute>
             }
           />
           <Route path="*" element={<NotFound />} />
