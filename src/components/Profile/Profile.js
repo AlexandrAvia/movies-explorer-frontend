@@ -2,21 +2,22 @@ import "./Profile.css";
 import Header from "../Header/Header";
 import { useFormWithValidation } from "../../hooks/validation";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
-function Profile({ updateUserInfo, signOut }) {
+function Profile({ updateUserInfo, signOut, statusMessage }) {
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation();
   const currentUser = useContext(CurrentUserContext);
+
+  const disabledButton =
+    (values.name === currentUser.name && values.email === currentUser.email) ||
+    !isValid;
+
   useEffect(() => {
     if (currentUser) {
       resetForm(currentUser, {}, true);
     }
   }, [currentUser, resetForm]);
-
-  const disabledButton =
-    !isValid ||
-    (values.name === currentUser.name && values.email === currentUser.email);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -58,14 +59,15 @@ function Profile({ updateUserInfo, signOut }) {
             />
           </div>
           <span className="form__error">{errors.email}</span>
-          {/* <span className="profile__error">Что-то пошло не так...</span> */}
         </fieldset>
+
         <fieldset className="fieldset__button-profile">
+          <span className="profile__error">{statusMessage}</span>
           <button
             type="submit"
             disabled={disabledButton ? true : false}
             className={`profile__button ${
-              !isValid && "profile__button_disabled"
+              disabledButton && "profile__button_disabled"
             }`}
           >
             Редактировать

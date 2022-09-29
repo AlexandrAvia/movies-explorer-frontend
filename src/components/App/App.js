@@ -19,11 +19,11 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [movies, setMovies] = useState([]);
   const [responseMessage, setresponseMessage] = useState("");
+  const [statusMessage, setStatusMessage] = useState("");
 
   useEffect(() => {
     tokenCheck();
   }, []);
-
   /* useEffect(() => {
     moviesApi.getMovies().then((res) => {
       setMovies(res);
@@ -47,6 +47,7 @@ function App() {
       .authorize(email, password)
       .then((data) => {
         localStorage.setItem("token", data.token);
+        setLoggedIn(true);
         tokenCheck();
       })
       .then(() => {
@@ -84,9 +85,12 @@ function App() {
       .editProfile(name, email)
       .then((userData) => {
         setCurrentUser(userData);
+        setStatusMessage("Профиль успешно обновлен");
       })
+
       .catch((err) => {
         console.log(err);
+        setStatusMessage("При обновлении профиля произошла ошибка");
       });
   };
 
@@ -100,7 +104,6 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
         <Routes>
-          <Route path="/" element={<Main isLogedin={loggedIn} />} />
           <Route
             path="/movies"
             element={
@@ -147,10 +150,15 @@ function App() {
             path="/profile"
             element={
               <ProtectedRoute loggedIn={loggedIn}>
-                <Profile updateUserInfo={updateUserInfo} signOut={signOut} />
+                <Profile
+                  updateUserInfo={updateUserInfo}
+                  signOut={signOut}
+                  statusMessage={statusMessage}
+                />
               </ProtectedRoute>
             }
           />
+          <Route path="/" element={<Main isLogedin={loggedIn} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
