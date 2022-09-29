@@ -71,7 +71,6 @@ function App() {
             };
             setLoggedIn(true);
             setCurrentUser(userData);
-            console.log(userData);
           }
         })
         .catch((err) => {
@@ -80,6 +79,23 @@ function App() {
     }
   };
 
+  const updateUserInfo = ({ name, email }) => {
+    return mainApi
+      .editProfile(name, email)
+      .then((userData) => {
+        setCurrentUser(userData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const signOut = () => {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+    setCurrentUser(null);
+    navigate("/");
+  };
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
@@ -113,7 +129,12 @@ function App() {
               )
             }
           />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/profile"
+            element={
+              <Profile updateUserInfo={updateUserInfo} signOut={signOut} />
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
