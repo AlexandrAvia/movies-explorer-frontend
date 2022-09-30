@@ -113,6 +113,11 @@ function App() {
 
   const signOut = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("saved-search-query");
+    localStorage.removeItem("value");
+    localStorage.removeItem("movies");
+    localStorage.removeItem("search-query");
+    setSavedMovies([]);
     setLoggedIn(false);
     setCurrentUser(null);
     navigate("/");

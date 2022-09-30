@@ -1,23 +1,23 @@
 import "./Movies.css";
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 
 function Movies({ movies, savedPage }) {
-  const lskey = savedPage ? 'saved-search-query' : 'search-query';
-  const initialQuery = localStorage.getItem(lskey) || '';
+  const lskey = savedPage ? "saved-search-query" : "search-query";
+  const initialQuery = localStorage.getItem(lskey) || "";
   const [currentSearchQuery, setCurrentSearchQuery] = useState(initialQuery);
 
-  const filterlskey = savedPage ? 'saved-short-filter' : 'short-filter';
+  const filterlskey = savedPage ? "saved-short-filter" : "short-filter";
   const initialFilter = localStorage.getItem(filterlskey) || false;
   const [checked, onCheckedChange] = useState(initialFilter);
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    setSearchQuery(initialQuery)
+    setSearchQuery(initialQuery);
   }, []);
 
   useEffect(() => {
@@ -28,11 +28,14 @@ function Movies({ movies, savedPage }) {
     event.preventDefault();
     setSearchQuery(currentSearchQuery);
   };
-
-  const filteredMovies = movies.filter((movie) => searchQuery ?
-    movie.nameRU.toLowerCase().includes(searchQuery) || movie.nameEN.toLowerCase().includes(searchQuery) :
-    savedPage
-  ).filter(movie => checked ? movie.duration <= 40 : true)
+  const filteredMovies = movies
+    .filter((movie) =>
+      searchQuery
+        ? movie.nameRU.toLowerCase().includes(searchQuery) ||
+          movie.nameEN.toLowerCase().includes(searchQuery)
+        : savedPage
+    )
+    .filter((movie) => (checked ? movie.duration <= 40 : true));
 
   return (
     <>
@@ -42,7 +45,8 @@ function Movies({ movies, savedPage }) {
         setSearchQuery={setCurrentSearchQuery}
         onSubmit={onSubmit}
         checked={checked}
-        onCheckedChange={onCheckedChange} />
+        onCheckedChange={onCheckedChange}
+      />
       <MoviesCardList savedPage={savedPage} movies={filteredMovies} />
       <Footer />
     </>
