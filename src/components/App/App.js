@@ -1,6 +1,5 @@
 import {
   Route,
-  Router,
   Routes,
   useNavigate,
   Navigate,
@@ -11,7 +10,6 @@ import "./App.css";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
-import SavedMovies from "../SavedMovies/SavedMovies";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
@@ -26,6 +24,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [movies, setMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
   const [responseMessage, setresponseMessage] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
 
@@ -56,12 +55,24 @@ function App() {
     }
   };
 
-  /* useEffect(() => {
+  useEffect(() => {
+    // TODO запрашивать только если нет в local storage
+    // не забыть чистить local storage при разлогине
     moviesApi.getMovies().then((res) => {
+      console.log(res);
       setMovies(res);
       localStorage.setItem("movies", JSON.stringify(res));
     });
-  }, []); */
+  }, []);
+
+  // TODO обернуть Movies в роуте /saved-movies в компоненты со своим стейтом с сохранёнными фильмами
+  useEffect(() => {
+    mainApi.getSavedMovies().then((res) => {
+      console.log('saved');
+        console.log(res);
+        setSavedMovies(res);
+    });
+  }, []);
 
   const handleRegister = ({ name, email, password }) => {
     return mainApi
@@ -126,7 +137,9 @@ function App() {
             path="/saved-movies"
             element={
               <ProtectedRoute loggedIn={loggedIn}>
-                <SavedMovies />
+                <SavedMovies> // тут положи стейт с сохранёнными и напиши тут useEffect для получения
+                  <Movies movies={savedMovies} saved /> // это перенеси в SavedMovies
+                </SavedMovies>
               </ProtectedRoute>
             }
           />

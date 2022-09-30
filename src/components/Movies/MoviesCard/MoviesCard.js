@@ -1,4 +1,5 @@
 import "./MoviesCard.css";
+import { mainApi } from './../../../utils/MainApi';
 
 function MoviesCard({ movie }) {
   function getTimeFromMins(mins) {
@@ -6,6 +7,11 @@ function MoviesCard({ movie }) {
     let minutes = mins % 60;
     return hours + "ч " + minutes + "м";
   }
+
+  const handleSaveMovie = () => {
+    mainApi.saveMovie(movie);
+  } 
+
   return (
     <div className="card">
       <a href={movie.trailerLink} rel="noreferrer" target="_blank">
@@ -21,10 +27,10 @@ function MoviesCard({ movie }) {
           {getTimeFromMins(movie.duration)}
         </p>
       </div>
-      {true ? (
+      {false ? (
         <button className="card__button-saved" />
       ) : (
-        <button className="card__button-save">Сохранить</button>
+        <button onClick={handleSaveMovie} className="card__button-save">Сохранить</button>
       )}
     </div>
   );
