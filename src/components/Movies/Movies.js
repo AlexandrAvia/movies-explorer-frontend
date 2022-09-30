@@ -5,12 +5,12 @@ import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 
-function Movies({ movies, saved }) {
-  const lskey = saved ? 'saved-search-query' : 'search-query';
+function Movies({ movies, savedPage }) {
+  const lskey = savedPage ? 'saved-search-query' : 'search-query';
   const initialQuery = localStorage.getItem(lskey) || '';
   const [currentSearchQuery, setCurrentSearchQuery] = useState(initialQuery);
 
-  const filterlskey = saved ? 'saved-short-filter' : 'short-filter';
+  const filterlskey = savedPage ? 'saved-short-filter' : 'short-filter';
   const initialFilter = localStorage.getItem(filterlskey) || false;
   const [checked, onCheckedChange] = useState(initialFilter);
 
@@ -29,6 +29,11 @@ function Movies({ movies, saved }) {
     setSearchQuery(currentSearchQuery);
   };
 
+  const filteredMovies = movies.filter((movie) => searchQuery ?
+    movie.nameRU.toLowerCase().includes(searchQuery) || movie.nameEN.toLowerCase().includes(searchQuery) :
+    savedPage
+  ).filter(movie => checked ? movie.duration <= 40 : true)
+
   return (
     <>
       <Header isLogedin={true} />
@@ -38,7 +43,7 @@ function Movies({ movies, saved }) {
         onSubmit={onSubmit}
         checked={checked}
         onCheckedChange={onCheckedChange} />
-      <MoviesCardList movies={movies} searchQuery={searchQuery.toLowerCase()} filterShort={checked} />
+      <MoviesCardList savedPage={savedPage} movies={filteredMovies} />
       <Footer />
     </>
   );

@@ -1,7 +1,9 @@
 import "./MoviesCard.css";
-import { mainApi } from './../../../utils/MainApi';
+import { useContext } from "react";
+import { SavedMoviesContext } from "../../../contexts/SavedMoviesContext";
 
-function MoviesCard({ movie }) {
+function MoviesCard({ movie, savedPage }) {
+  const savedMoviesContext = useContext(SavedMoviesContext);
   function getTimeFromMins(mins) {
     let hours = Math.trunc(mins / 60);
     let minutes = mins % 60;
@@ -9,15 +11,27 @@ function MoviesCard({ movie }) {
   }
 
   const handleSaveMovie = () => {
-    mainApi.saveMovie(movie);
-  } 
+    savedMoviesContext.saveMovie(movie);
+  };
+
+  const handleDeleteMovie = () => {
+    savedMoviesContext.deleteMovie(
+      savedMoviesContext.savedMovies.find(
+        (savedMovie) => savedMovie.id === movie.id
+      ).savedId
+    );
+  };
 
   return (
     <div className="card">
       <a href={movie.trailerLink} rel="noreferrer" target="_blank">
         <img
           className="card__image"
-          src={`https://api.nomoreparties.co${movie.image.url}`}
+          src={
+            movie.image.url.startsWith("http")
+              ? movie.image.url
+              : `https://api.nomoreparties.co${movie.image.url}`
+          }
           alt={movie.nameRU}
         />
       </a>
@@ -27,10 +41,16 @@ function MoviesCard({ movie }) {
           {getTimeFromMins(movie.duration)}
         </p>
       </div>
-      {false ? (
-        <button className="card__button-saved" />
+      {savedPage ? (
+        <button onClick={handleDeleteMovie} className="card__button-delete" />
+      ) : savedMoviesContext.savedMovies
+          .map((movie) => movie.id)
+          .includes(movie.id) ? (
+        <button onClick={handleDeleteMovie} className="card__button-saved" />
       ) : (
-        <button onClick={handleSaveMovie} className="card__button-save">Сохранить</button>
+        <button onClick={handleSaveMovie} className="card__button-save">
+          Сохранить
+        </button>
       )}
     </div>
   );

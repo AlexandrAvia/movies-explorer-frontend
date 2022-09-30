@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./App.css";
+import { SavedMoviesContext } from "../../contexts/SavedMoviesContext";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
@@ -17,6 +18,7 @@ import NotFound from "../NotFound/NotFound";
 import moviesApi from "../../utils/MoviesApi";
 import { mainApi } from "../../utils/MainApi";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import { movieMapper } from "../../utils/movieMapper";
 
 function App() {
   const navigate = useNavigate();
@@ -24,9 +26,15 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [movies, setMovies] = useState([]);
-  const [savedMovies, setSavedMovies] = useState([]);
   const [responseMessage, setresponseMessage] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
+  const [savedMovies, setSavedMovies] = useState([]);
+
+  useEffect(() => {
+    mainApi.getSavedMovies().then((res) => {
+      setSavedMovies(res.map(movieMapper));
+    });
+  }, []);
 
   useEffect(() => {
     tokenCheck();
@@ -56,21 +64,9 @@ function App() {
   };
 
   useEffect(() => {
-    // TODO запрашивать только если нет в local storage
-    // не забыть чистить local storage при разлогине
     moviesApi.getMovies().then((res) => {
-      console.log(res);
       setMovies(res);
       localStorage.setItem("movies", JSON.stringify(res));
-    });
-  }, []);
-
-  // TODO обернуть Movies в роуте /saved-movies в компоненты со своим стейтом с сохранёнными фильмами
-  useEffect(() => {
-    mainApi.getSavedMovies().then((res) => {
-      console.log('saved');
-        console.log(res);
-        setSavedMovies(res);
     });
   }, []);
 
@@ -121,71 +117,94 @@ function App() {
     setCurrentUser(null);
     navigate("/");
   };
+
+  const handleSaveMovie = (movie) => {
+    mainApi.saveMovie(movie).then(() => {
+      mainApi.getSavedMovies().then((res) => {
+        setSavedMovies(res.map(movieMapper));
+      });
+    });
+  };
+
+  const handleDeleteMovie = (id) => {
+    mainApi.deleteMovie(id).then(() => {
+      mainApi.getSavedMovies().then((res) => {
+        setSavedMovies(res.map(movieMapper));
+      });
+    });
+  };
+
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-      <div className="app">
-        <Routes>
-          <Route
-            path="/movies"
-            element={
-              <ProtectedRoute loggedIn={loggedIn}>
-                <Movies movies={movies} />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/saved-movies"
-            element={
-              <ProtectedRoute loggedIn={loggedIn}>
-                <SavedMovies> // тут положи стейт с сохранёнными и напиши тут useEffect для получения
-                  <Movies movies={savedMovies} saved /> // это перенеси в SavedMovies
-                </SavedMovies>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-              !loggedIn ? (
-                <Register
-                  handleRegister={handleRegister}
-                  responseMessage={responseMessage}
-                />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
-          <Route
-            path="/signin"
-            element={
-              !loggedIn ? (
-                <Login
-                  handleLogin={handleLogin}
-                  responseMessage={responseMessage}
-                />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute loggedIn={loggedIn}>
-                <Profile
-                  updateUserInfo={updateUserInfo}
-                  signOut={signOut}
-                  statusMessage={statusMessage}
-                />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/" element={<Main isLogedin={loggedIn} />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
-    </CurrentUserContext.Provider>
+    <SavedMoviesContext.Provider
+      value={{
+        savedMovies: savedMovies,
+        saveMovie: handleSaveMovie,
+        deleteMovie: handleDeleteMovie,
+      }}
+    >
+      <CurrentUserContext.Provider value={currentUser}>
+        <div className="app">
+          <Routes>
+            <Route
+              path="/movies"
+              element={
+                <ProtectedRoute loggedIn={loggedIn}>
+                  <Movies movies={movies} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/saved-movies"
+              element={
+                <ProtectedRoute loggedIn={loggedIn}>
+                  <Movies movies={savedMovies} savedPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                !loggedIn ? (
+                  <Register
+                    handleRegister={handleRegister}
+                    responseMessage={responseMessage}
+                  />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/signin"
+              element={
+                !loggedIn ? (
+                  <Login
+                    handleLogin={handleLogin}
+                    responseMessage={responseMessage}
+                  />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute loggedIn={loggedIn}>
+                  <Profile
+                    updateUserInfo={updateUserInfo}
+                    signOut={signOut}
+                    statusMessage={statusMessage}
+                  />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/" element={<Main isLogedin={loggedIn} />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+      </CurrentUserContext.Provider>
+    </SavedMoviesContext.Provider>
   );
 }
 
