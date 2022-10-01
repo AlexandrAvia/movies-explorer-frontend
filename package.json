@@ -16,7 +16,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "predeploy" : "npm run build",
-    "deploy": " scp -r ./build/* alexandravia@84.201.164.103:/home/alexandravia/movies-explorer-frontend",
+    "deploy": " scp -r ./build/* alexandravia@51.250.99.159:/home/alexandravia/movies-explorer-frontend",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

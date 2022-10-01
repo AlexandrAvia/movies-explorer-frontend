@@ -124,19 +124,29 @@ function App() {
   };
 
   const handleSaveMovie = (movie) => {
-    mainApi.saveMovie(movie).then(() => {
-      mainApi.getSavedMovies().then((res) => {
-        setSavedMovies(res.map(movieMapper));
+    mainApi
+      .saveMovie(movie)
+      .then(() => {
+        mainApi.getSavedMovies().then((res) => {
+          setSavedMovies(res.map(movieMapper));
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    });
   };
 
   const handleDeleteMovie = (id) => {
-    mainApi.deleteMovie(id).then(() => {
-      mainApi.getSavedMovies().then((res) => {
-        setSavedMovies(res.map(movieMapper));
+    mainApi
+      .deleteMovie(id)
+      .then(() => {
+        mainApi.getSavedMovies().then((res) => {
+          setSavedMovies(res.map(movieMapper));
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    });
   };
 
   return (

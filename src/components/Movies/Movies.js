@@ -30,10 +30,7 @@ function Movies({ movies, savedPage }) {
   };
   const filteredMovies = movies
     .filter((movie) =>
-      searchQuery
-        ? movie.nameRU.toLowerCase().includes(searchQuery) /* ||
-          movie.nameEN.toLowerCase().includes(searchQuery) */
-        : savedPage
+      searchQuery ? movie.nameRU.toLowerCase().includes(searchQuery) : savedPage
     )
     .filter((movie) => (checked ? movie.duration <= 40 : true));
 
