@@ -43,6 +43,7 @@ function Movies({ movies, savedPage }) {
         onSubmit={onSubmit}
         checked={checked}
         onCheckedChange={onCheckedChange}
+        savedPage={savedPage}
       />
       <MoviesCardList savedPage={savedPage} movies={filteredMovies} />
       <Footer />
