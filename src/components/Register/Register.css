@@ -93,6 +93,12 @@
   cursor: default;
 }
 
+.form__error-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
 .form__paragraph {
   font-weight: 400;
   font-size: 14px;

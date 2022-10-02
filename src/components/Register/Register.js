@@ -38,8 +38,10 @@ function Register({ handleRegister, responseMessage }) {
             value={values.name || ""}
             required
           />
-          <span className="form__error">{errors.name}</span>
-          <label className="form__label">E-mail</label>
+          <div className="form__error-container">
+            <span className="form__error">{errors.name}</span>
+            <label className="form__label">E-mail</label>
+          </div>
           <input
             className="form__input"
             type="email"
@@ -50,8 +52,10 @@ function Register({ handleRegister, responseMessage }) {
             onChange={handleChange}
             value={values.email || ""}
           />
-          <span className="form__error">{errors.email}</span>
-          <label className="form__label">Пароль</label>
+          <div className="form__error-container">
+            <span className="form__error">{errors.email}</span>
+            <label className="form__label">Пароль</label>
+          </div>
           <input
             className="form__input"
             type="password"
@@ -64,7 +68,9 @@ function Register({ handleRegister, responseMessage }) {
             onChange={handleChange}
             value={values.password || ""}
           />
-          <span className="form__error">{errors.password}</span>
+          <div className="form__error-container">
+            <span className="form__error">{errors.password}</span>
+          </div>
         </fieldset>
         <fieldset className="fieldset__button">
           <p className="form__error">{responseMessage}</p>

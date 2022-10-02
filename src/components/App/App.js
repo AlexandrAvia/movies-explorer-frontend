@@ -64,11 +64,23 @@ function App() {
   };
 
   useEffect(() => {
-    moviesApi.getMovies().then((res) => {
-      setMovies(res);
-      localStorage.setItem("movies", JSON.stringify(res));
-    });
-  }, []);
+    if (loggedIn) {
+      const movies = localStorage.getItem("movies");
+      if (movies) {
+        setMovies(JSON.parse(movies));
+      } else {
+        moviesApi
+          .getMovies()
+          .then((res) => {
+            setMovies(res);
+            localStorage.setItem("movies", JSON.stringify(res));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    }
+  }, [loggedIn]);
 
   const handleRegister = ({ name, email, password }) => {
     return mainApi

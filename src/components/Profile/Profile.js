@@ -44,7 +44,9 @@ function Profile({ updateUserInfo, signOut, statusMessage }) {
               onChange={handleChange}
             />
           </div>
-          <span className="form__error">{errors.name}</span>
+          <div className="form__error-container">
+            <span className="form__error">{errors.name}</span>
+          </div>
           <div className="profile__place">
             <label className="profile__label">E-mail</label>
             <input
@@ -58,7 +60,9 @@ function Profile({ updateUserInfo, signOut, statusMessage }) {
               onChange={handleChange}
             />
           </div>
-          <span className="form__error">{errors.email}</span>
+          <div className="form__error-container">
+            <span className="form__error">{errors.email}</span>
+          </div>
         </fieldset>
 
         <fieldset className="fieldset__button-profile">
