@@ -55,7 +55,6 @@
   right: 14px;
   top: 14px;
   cursor: pointer;
-  display: none;
 }
 
 .card__button-saved {
@@ -66,17 +65,32 @@
   right: 14px;
   top: 14px;
   cursor: pointer;
-  display: none;
   border: none;
   border-radius: 20px;
+}
+
+.card:hover .card__button-saved {
+  display: block;
 }
 
 .card:hover .card__button-save {
   display: block;
 }
 
-.card:hover .card__button-saved {
+.card:hover .card__button-delete {
   display: block;
+}
+
+.card__button-delete {
+  background-image: url("../../../images/delete-card.svg");
+  width: 21px;
+  height: 21px;
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 20px;
 }
 
 @media screen and (max-width: 1276px) {

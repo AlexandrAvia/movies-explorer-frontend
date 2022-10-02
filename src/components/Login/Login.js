@@ -1,15 +1,29 @@
+import React from "react";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
+import { useFormWithValidation } from "../../hooks/validation";
 
-function Login() {
+function Login({ handleLogin, responseMessage }) {
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
+  const [disabled, setDisabled] = React.useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    handleLogin({
+      email: values.email,
+      password: values.password,
+    });
+    setDisabled(true);
+    return !isValid;
+  }
   return (
     <section className="register">
       <Link to="/" className="header__logo-link">
         <img className="header__logo-image" src={logo} alt="логотип" />
       </Link>
       <h2 className="form__title">Рады видеть!</h2>
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
         <fieldset className="form__fieldset">
           <label className="form__label">E-mail</label>
           <input
@@ -19,8 +33,14 @@ function Login() {
             aria-label="Электронная почта"
             placeholder="pochta@yandex.ru"
             required
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            onChange={handleChange}
+            value={values.email || ""}
           />
-          <label className="form__label">Пароль</label>
+          <div className="form__error-container">
+            <span className="form__error">{errors.email}</span>
+            <label className="form__label">Пароль</label>
+          </div>
           <input
             className="form__input"
             type="password"
@@ -30,21 +50,32 @@ function Login() {
             minLength="4"
             maxLength="15"
             required
+            onChange={handleChange}
+            value={values.password || ""}
           />
-          {/* <span className="form__error">Что-то пошло не так...</span> */}
+          <div className="form__error-container">
+            <span className="form__error">{errors.password}</span>
+          </div>
+        </fieldset>
+        <fieldset className="fieldset__button">
+          <p className="form__error">{responseMessage}</p>
+          <button
+            type="submit"
+            disabled={!isValid}
+            className={`form__save-button ${
+              !isValid && "form__save-button_disabled"
+            }`}
+          >
+            Войти
+          </button>
+          <p className="form__paragraph">
+            Ещё не зарегистрированы?&ensp;
+            <Link to="/signup" className="form__link">
+              Регистрация
+            </Link>
+          </p>
         </fieldset>
       </form>
-      <fieldset className="fieldset__button">
-        <button type="button" className="form__save-button">
-          Войти
-        </button>
-        <p className="form__paragraph">
-          Ещё не зарегистрированы?&ensp;
-          <Link to="/signin" className="form__link">
-            Регистрация
-          </Link>
-        </p>
-      </fieldset>
     </section>
   );
 }

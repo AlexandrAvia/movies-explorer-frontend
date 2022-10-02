@@ -1,23 +1,16 @@
 import "./Movies.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Header from "../Header/Header";
 import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
-import { SHORT_MOVIE, FILTER_LS_KEY, SEARCH_QUERY_LS_KEY } from "../../constants/constants";
+import { SHORT_MOVIE } from "../../constants/constants";
 
 function Movies({ movies }) {
-  const initialFilter = JSON.parse(localStorage.getItem(FILTER_LS_KEY)) || false;
-  const [shortFilter, onCheckedChange] = useState(initialFilter);
-  
-  const initialQuery = localStorage.getItem(SEARCH_QUERY_LS_KEY) || "";
-  const [searchQuery, setSearchQuery] = useState(initialQuery);
-  const [currentSearchQuery, setCurrentSearchQuery] = useState(initialQuery);
+  const [currentSearchQuery, setCurrentSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
-  useEffect(() => {
-    localStorage.setItem(SEARCH_QUERY_LS_KEY, searchQuery);
-    localStorage.setItem(FILTER_LS_KEY, shortFilter);
-  }, [searchQuery, shortFilter]);
+  const [checked, onCheckedChange] = useState(false);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -28,9 +21,9 @@ function Movies({ movies }) {
     .filter((movie) =>
       searchQuery
         ? movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase())
-        : false
+        : true
     )
-    .filter((movie) => (shortFilter ? movie.duration <= SHORT_MOVIE : true));
+    .filter((movie) => (checked ? movie.duration <= SHORT_MOVIE : true));
 
   return (
     <>
@@ -39,12 +32,12 @@ function Movies({ movies }) {
         searchQuery={currentSearchQuery}
         setSearchQuery={setCurrentSearchQuery}
         onSubmit={onSubmit}
-        checked={shortFilter}
+        checked={checked}
         onCheckedChange={onCheckedChange}
-        savedPage={false}
+        savedPage
       />
       <MoviesCardList
-        savedPage={false}
+        savedPage
         movies={filteredMovies}
         searchQuery={searchQuery}
       />

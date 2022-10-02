@@ -46,13 +46,13 @@ function Navigation({ isLogedin }) {
                 onClick={closeMenu}
               />
               <div className="burger-menu__links">
-                <Link to="/" className="burger-menu__link">
+                <Link to="/" className="burger-menu__link" onClick={closeMenu}>
                   Главная
                 </Link>
-                <Link to="/movies" className="burger-menu__link">
+                <Link to="/movies" className="burger-menu__link" onClick={closeMenu}>
                   Фильмы
                 </Link>
-                <Link to="/saved-movies" className="burger-menu__link">
+                <Link to="/saved-movies" className="burger-menu__link" onClick={closeMenu}>
                   Сохраненные фильмы
                 </Link>
               </div>

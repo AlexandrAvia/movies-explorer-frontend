@@ -10,6 +10,15 @@
   justify-content: center;
 }
 
+.card__not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  line-height: 16px;
+  color: #8b8b8b;
+}
+
 .card__more {
   margin: 0 auto;
   display: block;
