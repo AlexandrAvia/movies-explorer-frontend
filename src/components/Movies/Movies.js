@@ -4,6 +4,7 @@ import Header from "../Header/Header";
 import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
+import { SHORT_MOVIE } from "../../constants/constants";
 
 function Movies({ movies, savedPage }) {
   const lskey = savedPage ? "saved-search-query" : "search-query";
@@ -34,7 +35,7 @@ function Movies({ movies, savedPage }) {
         ? movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase())
         : savedPage
     )
-    .filter((movie) => (checked ? movie.duration <= 40 : true));
+    .filter((movie) => (checked ? movie.duration <= SHORT_MOVIE : true));
 
   return (
     <>
