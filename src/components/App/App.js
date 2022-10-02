@@ -142,10 +142,9 @@ function App() {
   const handleSaveMovie = (movie) => {
     mainApi
       .saveMovie(movie)
-      .then(() => {
-        mainApi.getSavedMovies().then((res) => {
-          setSavedMovies(res.map(movieMapper));
-        });
+      .then((res) => {
+        console.log(res);
+        setSavedMovies(savedMovies.concat(movieMapper(res)));
       })
       .catch((err) => {
         console.log(err);
