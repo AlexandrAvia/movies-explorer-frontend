@@ -143,7 +143,6 @@ function App() {
     mainApi
       .saveMovie(movie)
       .then((res) => {
-        console.log(res);
         setSavedMovies(savedMovies.concat(movieMapper(res)));
       })
       .catch((err) => {

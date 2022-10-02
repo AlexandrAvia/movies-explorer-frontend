@@ -4,12 +4,17 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import { useCurrentWidth } from "../../../hooks/useCurrentWidth";
 import { getInitialCount, clickMoreMovies } from "../../../utils/MovieCount";
 
-function MoviesCardList({ movies, savedPage }) {
+function MoviesCardList({ movies, savedPage, searchQuery }) {
   const width = useCurrentWidth();
   const [moviesCount, setmoviesCount] = useState(getInitialCount(width));
   const loadMore = () => {
     setmoviesCount((prev) => prev + clickMoreMovies(width));
   };
+
+  if (!savedPage && searchQuery.length != 0 && movies.length === 0) {
+    //обернуть
+    return "ничего не найдено";
+  }
 
   return (
     <section className="card__list">

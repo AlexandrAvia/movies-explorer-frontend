@@ -48,7 +48,11 @@ function Movies({ movies, savedPage }) {
         onCheckedChange={onCheckedChange}
         savedPage={savedPage}
       />
-      <MoviesCardList savedPage={savedPage} movies={filteredMovies} />
+      <MoviesCardList
+        savedPage={savedPage}
+        movies={filteredMovies}
+        searchQuery={searchQuery}
+      />
       <Footer />
     </>
   );
