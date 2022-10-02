@@ -156,9 +156,16 @@ function App() {
     mainApi
       .deleteMovie(id)
       .then(() => {
-        mainApi.getSavedMovies().then((res) => {
-          setSavedMovies(res.map(movieMapper));
-        });
+        const indexToRemove = savedMovies.findIndex(
+          (movie) => movie.savedId === id
+        );
+        if (indexToRemove >= 0) {
+          const result = [
+            ...savedMovies.slice(0, indexToRemove),
+            ...savedMovies.slice(indexToRemove + 1),
+          ];
+          setSavedMovies(result);
+        }
       })
       .catch((err) => {
         console.log(err);

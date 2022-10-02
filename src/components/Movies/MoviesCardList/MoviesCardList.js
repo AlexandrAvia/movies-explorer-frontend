@@ -10,14 +10,13 @@ function MoviesCardList({ movies, savedPage }) {
   const loadMore = () => {
     setmoviesCount((prev) => prev + clickMoreMovies(width));
   };
+
   return (
     <section className="card__list">
       <div className="card__container">
-        {movies
-          .slice(0, moviesCount).map((movie) => (
-            <MoviesCard key={movie.id} movie={movie} savedPage={savedPage} />
-          ))
-        }
+        {movies.slice(0, moviesCount).map((movie) => (
+          <MoviesCard key={movie.id} movie={movie} savedPage={savedPage} />
+        ))}
       </div>
       {moviesCount < movies.length && (
         <button onClick={loadMore} type="button" className="card__more">
