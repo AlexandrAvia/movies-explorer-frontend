@@ -31,10 +31,12 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
 
   useEffect(() => {
-    mainApi.getSavedMovies().then((res) => {
-      setSavedMovies(res.map(movieMapper));
-    });
-  }, []);
+    if (loggedIn) {
+      mainApi.getSavedMovies().then((res) => {
+        setSavedMovies(res.map(movieMapper));
+      });
+    }
+  }, [loggedIn]);
 
   useEffect(() => {
     tokenCheck();
@@ -59,6 +61,7 @@ function App() {
         })
         .catch((err) => {
           console.log(err);
+          signOut();
         });
     }
   };
@@ -87,6 +90,7 @@ function App() {
       .register(name, email, password)
       .then(() => {
         handleLogin({ email, password });
+        navigate("/movies");
       })
       .catch((err) => {
         setresponseMessage(err);
