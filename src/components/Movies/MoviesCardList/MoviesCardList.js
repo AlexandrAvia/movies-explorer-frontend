@@ -11,9 +11,16 @@ function MoviesCardList({ movies, savedPage, searchQuery }) {
     setmoviesCount((prev) => prev + clickMoreMovies(width));
   };
 
-  if (!savedPage && searchQuery.length !== 0 && movies.length === 0) {
-    //обернуть
-    return "ничего не найдено";
+  if (searchQuery.length !== 0 && movies.length === 0) {
+    return (
+      <div className="card__not-found">
+        "По вашему запросу ничего не найдено"
+      </div>
+    );
+  }
+
+  if (savedPage && movies.length === 0) {
+    return <div className="card__not-found">"Нет сохранённых фильмов"</div>;
   }
 
   return (

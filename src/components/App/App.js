@@ -3,14 +3,14 @@ import {
   Routes,
   useNavigate,
   Navigate,
-  useLocation,
 } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import "./App.css";
 import { SavedMoviesContext } from "../../contexts/SavedMoviesContext";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
+import SavedMovies from "../Movies/SavedMovies";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
@@ -19,12 +19,13 @@ import moviesApi from "../../utils/MoviesApi";
 import { mainApi } from "../../utils/MainApi";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { movieMapper } from "../../utils/movieMapper";
+import { SEARCH_QUERY_LS_KEY, FILTER_LS_KEY } from '../../constants/constants';
 
 function App() {
   const navigate = useNavigate();
-  const location = useLocation();
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
   const [responseMessage, setresponseMessage] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
@@ -38,11 +39,18 @@ function App() {
     }
   }, [loggedIn]);
 
-  useEffect(() => {
-    tokenCheck();
-  }, []);
+  const signOut = useCallback(() => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("movies");
+    localStorage.removeItem(SEARCH_QUERY_LS_KEY);
+    localStorage.removeItem(FILTER_LS_KEY);
+    setSavedMovies([]);
+    setLoggedIn(false);
+    setCurrentUser(null);
+    navigate("/");
+  }, [navigate]);
 
-  const tokenCheck = () => {
+  const tokenCheck = useCallback(() => {
     let jwt = localStorage.getItem("token");
     if (jwt) {
       mainApi
@@ -54,7 +62,6 @@ function App() {
               email: res.email,
               name: res.name,
             };
-            navigate(location.pathname);
             setLoggedIn(true);
             setCurrentUser(userData);
           }
@@ -62,9 +69,15 @@ function App() {
         .catch((err) => {
           console.log(err);
           signOut();
+        }).finally(() => {
+          setLoading(false);
         });
     }
-  };
+  }, [signOut]);
+
+  useEffect(() => {
+    tokenCheck();
+  }, [tokenCheck]);
 
   useEffect(() => {
     if (loggedIn) {
@@ -90,7 +103,6 @@ function App() {
       .register(name, email, password)
       .then(() => {
         handleLogin({ email, password });
-        navigate("/movies");
       })
       .catch((err) => {
         setresponseMessage(err);
@@ -125,18 +137,6 @@ function App() {
         console.log(err);
         setStatusMessage("При обновлении профиля произошла ошибка");
       });
-  };
-
-  const signOut = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("saved-search-query");
-    localStorage.removeItem("value");
-    localStorage.removeItem("movies");
-    localStorage.removeItem("search-query");
-    setSavedMovies([]);
-    setLoggedIn(false);
-    setCurrentUser(null);
-    navigate("/");
   };
 
   const handleSaveMovie = (movie) => {
@@ -184,7 +184,7 @@ function App() {
             <Route
               path="/movies"
               element={
-                <ProtectedRoute loggedIn={loggedIn}>
+                <ProtectedRoute loggedIn={loggedIn} loading={loading}>
                   <Movies movies={movies} />
                 </ProtectedRoute>
               }
@@ -192,8 +192,8 @@ function App() {
             <Route
               path="/saved-movies"
               element={
-                <ProtectedRoute loggedIn={loggedIn}>
-                  <Movies movies={savedMovies} savedPage />
+                <ProtectedRoute loggedIn={loggedIn} loading={loading}>
+                  <SavedMovies movies={savedMovies} />
                 </ProtectedRoute>
               }
             />
@@ -226,7 +226,7 @@ function App() {
             <Route
               path="/profile"
               element={
-                <ProtectedRoute loggedIn={loggedIn}>
+                <ProtectedRoute loggedIn={loggedIn} loading={loading}>
                   <Profile
                     updateUserInfo={updateUserInfo}
                     signOut={signOut}
