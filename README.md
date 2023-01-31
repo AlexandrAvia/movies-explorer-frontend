@@ -1,4 +1,19 @@
 # movies-explorer-frontend
+Фронтен для проекта Movies-lives, написанный на react.js.
+Стек: JavaScript 
+
+В данном вэб-приложение реализован мини-кинопоиск, открывающийся после регистрации.
+
+В нём представлены:
+
+Лендинг c кратким описанием:
+- Работы над дипломом (этапы, дэдлайны).
+- Изученных технологий во время обучения.
+- Информации о себе.
+- Портфолио (часть проектов).
+
+Поисковик фильмов с возможностью сохранения их к себе в коллекцию
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
